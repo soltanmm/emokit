@@ -178,7 +178,20 @@ int emokit_close(struct emokit_device* s)
 
 int emokit_read_data(struct emokit_device* s)
 {
-	return hid_read(s->_dev, s->raw_frame, 32);
+	int res = hid_set_nonblocking(s->_dev, 0);
+	if(res < 0)
+		return res;
+	else
+		return hid_read(s->_dev, s->raw_frame, 32);
+}
+
+int emokit_poll_data(struct emokit_device* s)
+{
+	int res = hid_set_nonblocking(s->_dev, 1);
+	if(res < 0)
+		return res;
+	else
+		return hid_read(s->_dev, s->raw_frame, 32);
 }
 
 EMOKIT_DECLSPEC

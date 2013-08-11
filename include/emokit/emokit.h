@@ -130,6 +130,15 @@ extern "C"
 	 * @return 0 if successful, < 0 for error
 	 */
 	EMOKIT_DECLSPEC int emokit_read_data(struct emokit_device* dev);
+	
+	/**
+	 * Poll the device. Like emokit_read_data, but non-blocking.
+	 * 
+	 * @param dev Opened device structure
+	 * 
+	 * @return 0 if nothing read, 1 if report was read, < 0 for error
+	 */
+	EMOKIT_DECLSPEC int emokit_poll_data(struct emokit_device* dev);
 
 	EMOKIT_DECLSPEC struct emokit_frame
 	emokit_get_next_frame(struct emokit_device* dev);
