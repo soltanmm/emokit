@@ -136,7 +136,7 @@ extern "C"
 	 * 
 	 * @param dev Opened device structure
 	 * 
-	 * @return 0 if nothing read, 1 if report was read, < 0 for error
+	 * @return 0 if nothing read, >=1 if report was read, < 0 for error
 	 */
 	EMOKIT_DECLSPEC int emokit_poll_data(struct emokit_device* dev);
 
