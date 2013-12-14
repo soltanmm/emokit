@@ -359,9 +359,9 @@ class Emotiv(object):
                     os.system('cls')
                 else:
                     os.system('clear')
-                print "Packets Received: %s Packets Processed: %s" % (self.packetsReceived, self.packetsProcessed)
+                print("Packets Received: %s Packets Processed: %s" % (self.packetsReceived, self.packetsProcessed))
                 print('\n'.join("%s Reading: %s Strength: %s" % (k[1], self.sensors[k[1]]['value'],self.sensors[k[1]]['quality']) for k in enumerate(self.sensors)))
-                print "Battery: %i" % g_battery
+                print("Battery: %i" % g_battery)
             gevent.sleep(1)
 
     def getLinuxSetup(self):
@@ -388,7 +388,7 @@ class Emotiv(object):
                     with open(input[0] + "/serial", 'r') as f:
                         serial = f.readline().strip()
                         f.close()
-                    print "Serial: " + serial + " Device: " + input[1]
+                    print("Serial: " + serial + " Device: " + input[1])
                     # Great we found it. But we need to use the second one...
                     hidraw = input[1]
                     id_hidraw = int(hidraw[-1])
@@ -398,7 +398,7 @@ class Emotiv(object):
                     print "Serial: " + serial + " Device: " + hidraw + " (Active)"
                     return [serial, hidraw, ]
             except IOError as e:
-                print "Couldn't open file: %s" % e
+                print("Couldn't open file: %s" % e)
 
     def setupWin(self):
         devices = []
@@ -508,7 +508,7 @@ class Emotiv(object):
         key = ''.join(k)
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(key, AES.MODE_ECB, iv)
-        for i in k: print "0x%.02x " % (ord(i))
+        for i in k: print("0x%.02x " % (ord(i)))
         while self._goOn:
             while not tasks.empty():
                 task = tasks.get()
@@ -522,8 +522,14 @@ class Emotiv(object):
     def dequeue(self):
         try:
             return self.packets.get()
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
+    
+    def dequeue_nowait(self):
+        try:
+            return self.packets.get_nowait()
+        except Exception as e:
+            return None
 
     def close(self):
         if windows:
